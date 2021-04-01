@@ -5,7 +5,8 @@ from pyperclip import copy
 
 class DateTo:
     def __init__(self):
-        list_dates = {"کوییز 1 ریاضی 2 رئیسی": [(1400, 1, 21)],
+        list_dates = {"میان ترم فیزیک 2 مصدق": [(1400, 1, 14)],
+                      "کوییز 1 ریاضی 2 رئیسی": [(1400, 1, 21)],
                       "میان ترم زبان تخصصی گروه 1": [(1400, 1, 28)],
                       "میان ترم ریاضیات گسسته": [(1400, 1, 29)],
                       "میان ترم زبان تخصصی گروه 2": [(1400, 1, 31)],
@@ -48,12 +49,13 @@ class DateTo:
 
         target_date = JalaliDate(date[0], date[1], date[2]).to_gregorian()
         today_date = dt.today()
-        days_left = target_date - today_date
+        days_left = (target_date - today_date).days if (target_date - today_date).days != 0 else "امروز"
 
-        if len(item[1]) > 1:
-            self.keeper.append("{0}:\n{1} ==> {2}\n{3}".format(date_name, date_str, item[1][1], days_left.days))
-        else:
-            self.keeper.append("{0}:\n{1}\n{2}".format(date_name, date_str, days_left.days))
+        if days_left == "امروز" or int(days_left) > 0:
+            if len(item[1]) > 1:
+                self.keeper.append("{0}:\n{1} ==> {2}\n{3}".format(date_name, date_str, item[1][1], days_left))
+            else:
+                self.keeper.append("{0}:\n{1}\n{2}".format(date_name, date_str, days_left))
 
 
 if __name__ == "__main__":
